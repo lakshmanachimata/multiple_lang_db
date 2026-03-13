@@ -1,0 +1,79 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Backend Java",
+      "request": "launch",
+      "mainClass": "com.example.multilang.MultiLangBackendJavaApplication",
+      "projectName": "multi-lang-backend-java",
+      "cwd": "${workspaceFolder}/backends/java"
+    },
+    {
+      "type": "go",
+      "name": "Backend Go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}/backends/go",
+      "cwd": "${workspaceFolder}/backends/go",
+      "env": { "PORT": "8082" }
+    },
+    {
+      "type": "debugpy",
+      "name": "Backend Python",
+      "request": "launch",
+      "module": "uvicorn",
+      "args": ["app.main:app", "--host", "0.0.0.0", "--port", "8083"],
+      "cwd": "${workspaceFolder}/backends/python",
+      "jinja": true
+    },
+    {
+      "type": "node",
+      "name": "Backend Node",
+      "request": "launch",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["--watch", "src/index.js"],
+      "cwd": "${workspaceFolder}/backends/node",
+      "env": { "PORT": "8084" }
+    },
+    {
+      "type": "node",
+      "name": "BFF",
+      "request": "launch",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["--watch", "src/index.js"],
+      "cwd": "${workspaceFolder}/bff",
+      "env": { "PORT": "3000" }
+    },
+    {
+      "type": "node",
+      "name": "Frontend",
+      "request": "launch",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "cwd": "${workspaceFolder}/frontend"
+    },
+    {
+      "type": "chrome",
+      "name": "Frontend (Chrome)",
+      "request": "launch",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/frontend"
+    },
+  ],
+  "compounds": [
+    {
+      "name": "All backends + BFF + Frontend",
+      "configurations": [
+        "Backend Java",
+        "Backend Go",
+        "Backend Python",
+        "Backend Node",
+        "BFF",
+        "Frontend"
+      ],
+      "stopAll": true,
+      "presentation": { "hidden": false, "group": "compound" }
+    }
+  ]
+}

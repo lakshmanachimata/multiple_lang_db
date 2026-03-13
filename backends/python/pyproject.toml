@@ -1,0 +1,21 @@
+[project]
+name = "multi-lang-backend-python"
+version = "1.0.0"
+description = "Python backend - auth + tasks CRUD, SQL/Mongo via X-DB-Type"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.109.0",
+    "uvicorn[standard]>=0.27.0",
+    "python-jose[cryptography]>=3.3.0",
+    "passlib[bcrypt]>=1.7.4",
+    "sqlalchemy>=2.0.0",
+    "aiosqlite>=0.19.0",
+    "pymongo>=4.6.0",
+    "python-multipart>=0.0.6",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "httpx"]
+
+[tool.uv]
+dev-dependencies = []

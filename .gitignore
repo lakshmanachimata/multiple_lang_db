@@ -73,7 +73,41 @@ docs/_build/
 
 # PyBuilder
 .pybuilder/
+
+# Java / Maven
 target/
+*.class
+*.jar
+*.war
+*.ear
+.idea/
+*.iml
+.settings/
+.project
+.classpath
+
+# Go
+backends/go/bin/
+*.exe
+*.test
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.eslintcache
+dist/
+build/
+
+# React / Vite (frontend)
+frontend/dist/
+frontend/build/
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # Jupyter Notebook
 .ipynb_checkpoints
