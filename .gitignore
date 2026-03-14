@@ -1,6 +1,65 @@
+# =============================================================================
+# Generated / build artifacts — backends, BFF, frontend (do not commit)
+# =============================================================================
+
+# Java (backends/java)
+backends/java/target/
+backends/java/.idea/
+backends/java/*.iml
+backends/java/.settings/
+backends/java/.project
+backends/java/.classpath
+backends/java/.factorypath
+
+# Go (backends/go)
+backends/go/bin/
+backends/go/*.exe
+backends/go/*.test
+backends/go/*.out
+
+# Python (backends/python)
+backends/python/.venv/
+backends/python/venv/
+backends/python/__pycache__/
+backends/python/.pytest_cache/
+backends/python/.mypy_cache/
+backends/python/*.egg-info/
+backends/python/.eggs/
+backends/python/dist/
+backends/python/build/
+backends/python/*.sqlite
+backends/python/*.sqlite3
+
+# Node backend (backends/node)
+backends/node/node_modules/
+backends/node/dist/
+backends/node/build/
+backends/node/.env
+backends/node/.env.*
+
+# BFF
+bff/node_modules/
+bff/dist/
+bff/build/
+bff/.env
+bff/.env.*
+
+# Frontend (React / Vite)
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.vite/
+frontend/.env
+frontend/.env.local
+frontend/.env.*.local
+
+# =============================================================================
+# General (all languages / tools)
+# =============================================================================
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[codz]
+*.py[cod]
 *$py.class
 
 # C extensions
@@ -85,13 +144,15 @@ target/
 .settings/
 .project
 .classpath
-
+mvnw    
+mvnw.cmd
+.mvn/
 # Go
 backends/go/bin/
 *.exe
 *.test
 
-# Node
+# Node (general)
 node_modules/
 npm-debug.log*
 yarn-debug.log*
@@ -100,10 +161,9 @@ yarn-error.log*
 .eslintcache
 dist/
 build/
+*.log
 
-# React / Vite (frontend)
-frontend/dist/
-frontend/build/
+# React / Vite (frontend) — .env already in Environments below
 .env.local
 .env.development.local
 .env.test.local
