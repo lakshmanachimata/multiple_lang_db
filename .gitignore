@@ -16,6 +16,9 @@ backends/go/bin/
 backends/go/*.exe
 backends/go/*.test
 backends/go/*.out
+backends/go/.env
+backends/go/.env.*
+
 
 # Python (backends/python)
 backends/python/.venv/
@@ -29,6 +32,12 @@ backends/python/dist/
 backends/python/build/
 backends/python/*.sqlite
 backends/python/*.sqlite3
+multi-lang-backend-go
+multi-lang-backend-java
+multi-lang-backend-python
+multi-lang-backend-node
+multi-lang-backend-bff
+multi-lang-backend-frontend
 
 # Node backend (backends/node)
 backends/node/node_modules/
