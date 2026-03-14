@@ -1,5 +1,9 @@
 import express from 'express';
 import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 import Database from 'better-sqlite3';
 import { MongoClient } from 'mongodb';
 import { config } from './config.js';
@@ -8,6 +12,14 @@ import { jwtAuthMiddleware } from './middleware/jwtAuth.js';
 import { createRepositoryFactory } from './repositories/factory.js';
 import { createAuthRouter } from './routes/auth.js';
 import { createTasksRouter } from './routes/tasks.js';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+let openapiSpec;
+try {
+  openapiSpec = JSON.parse(readFileSync(join(__dirname, '..', 'openapi.json'), 'utf8'));
+} catch {
+  openapiSpec = { openapi: '3.0.0', info: { title: 'API', version: '1.0' }, paths: {} };
+}
 
 const db = new Database(config.sqlitePath);
 db.exec(`
@@ -40,6 +52,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(dbTypeMiddleware);
+
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(openapiSpec, { customSiteTitle: 'Node Backend API' }));
+app.get('/openapi.json', (req, res) => res.json(openapiSpec));
 
 app.use('/api/auth', createAuthRouter(factory));
 app.use('/api/tasks', createTasksRouter(factory, jwtAuthMiddleware));

@@ -2,8 +2,20 @@ import express from 'express';
 import cors from 'cors';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
+import swaggerUi from 'swagger-ui-express';
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 import fetch from 'node-fetch';
 import { config, getBackendBaseUrl } from './config.js';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+let openapiSpec;
+try {
+  openapiSpec = JSON.parse(readFileSync(join(__dirname, '..', 'openapi.json'), 'utf8'));
+} catch {
+  openapiSpec = { openapi: '3.0.0', info: { title: 'BFF API', version: '1.0' }, paths: {} };
+}
 
 const app = express();
 app.use(cors({ origin: true, credentials: true }));
@@ -19,6 +31,9 @@ app.use(
 );
 
 const X_DB_TYPE = 'X-DB-Type';
+
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(openapiSpec, { customSiteTitle: 'BFF API' }));
+app.get('/openapi.json', (req, res) => res.json(openapiSpec));
 
 async function proxyToBackend(lang, db, path, options = {}) {
   const base = getBackendBaseUrl(lang);

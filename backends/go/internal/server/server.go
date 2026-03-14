@@ -4,6 +4,8 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"net/http"
+	"os"
 	"strconv"
 
 	"multi-lang-backend-go/internal/config"
@@ -18,6 +20,24 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
+
+const swaggerHTMLGo = `<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5/swagger-ui.css" />
+</head>
+<body>
+  <div id="swagger-ui"></div>
+  <script src="https://unpkg.com/swagger-ui-dist@5/swagger-ui-bundle.js"></script>
+  <script>
+    SwaggerUIBundle({
+      url: "/openapi.json",
+      dom_id: "#swagger-ui",
+      presets: [SwaggerUIBundle.presets.apis],
+    });
+  </script>
+</body>
+</html>`
 
 type Server struct {
 	cfg    *config.Config
@@ -51,6 +71,19 @@ func New(cfg *config.Config) *Server {
 	taskHandler := handler.NewTaskHandler(taskSvc)
 
 	engine.Use(middleware.DbType())
+
+	engine.GET("/openapi.json", func(c *gin.Context) {
+		data, err := os.ReadFile("openapi.json")
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "openapi.json not found"})
+			return
+		}
+		c.Data(http.StatusOK, "application/json", data)
+	})
+	engine.GET("/docs", func(c *gin.Context) {
+		c.Header("Content-Type", "text/html; charset=utf-8")
+		c.String(http.StatusOK, swaggerHTMLGo)
+	})
 
 	api := engine.Group("/api")
 	auth := api.Group("/auth")

@@ -1,0 +1,29 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "spring-boot-run-debug",
+      "type": "shell",
+      "command": "./mvnw",
+      "args": [
+        "spring-boot:run",
+        "-Dspring-boot.run.jvmArguments=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/backends/java",
+        "env": { "PORT": "8081" }
+      },
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "java",
+        "pattern": { "regexp": "Listening for transport dt_socket" },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".",
+          "endsPattern": "Listening for transport dt_socket|Started .*Application"
+        }
+      },
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    }
+  ]
+}

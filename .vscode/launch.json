@@ -4,10 +4,10 @@
     {
       "type": "java",
       "name": "Backend Java",
-      "request": "launch",
-      "mainClass": "com.example.multilang.MultiLangBackendJavaApplication",
-      "projectName": "multi-lang-backend-java",
-      "cwd": "${workspaceFolder}/backends/java"
+      "request": "attach",
+      "hostName": "localhost",
+      "port": 5005,
+      "preLaunchTask": "spring-boot-run-debug"
     },
     {
       "type": "go",
@@ -25,6 +25,11 @@
       "module": "uvicorn",
       "args": ["app.main:app", "--host", "0.0.0.0", "--port", "8083"],
       "cwd": "${workspaceFolder}/backends/python",
+      "python": "${workspaceFolder}/backends/python/.venv/bin/python",
+      "env": {
+        "VIRTUAL_ENV": "${workspaceFolder}/backends/python/.venv",
+        "PORT": "8083"
+      },
       "jinja": true
     },
     {
@@ -60,6 +65,41 @@
       "url": "http://localhost:5173",
       "webRoot": "${workspaceFolder}/frontend"
     },
+    {
+      "type": "chrome",
+      "name": "Test with Swagger - Java (8081)",
+      "request": "launch",
+      "url": "http://localhost:8081/swagger-ui.html",
+      "webRoot": "${workspaceFolder}"
+    },
+    {
+      "type": "chrome",
+      "name": "Test with Swagger - Go (8082)",
+      "request": "launch",
+      "url": "http://localhost:8082/docs",
+      "webRoot": "${workspaceFolder}"
+    },
+    {
+      "type": "chrome",
+      "name": "Test with Swagger - Python (8083)",
+      "request": "launch",
+      "url": "http://localhost:8083/docs",
+      "webRoot": "${workspaceFolder}"
+    },
+    {
+      "type": "chrome",
+      "name": "Test with Swagger - Node (8084)",
+      "request": "launch",
+      "url": "http://localhost:8084/docs",
+      "webRoot": "${workspaceFolder}"
+    },
+    {
+      "type": "chrome",
+      "name": "Test with Swagger - BFF (3000)",
+      "request": "launch",
+      "url": "http://localhost:3000/docs",
+      "webRoot": "${workspaceFolder}"
+    }
   ],
   "compounds": [
     {
@@ -74,6 +114,36 @@
       ],
       "stopAll": true,
       "presentation": { "hidden": false, "group": "compound" }
+    },
+    {
+      "name": "Test Java with Swagger",
+      "configurations": ["Backend Java", "Test with Swagger - Java (8081)"],
+      "stopAll": true,
+      "presentation": { "group": "swagger", "order": 1 }
+    },
+    {
+      "name": "Test Go with Swagger",
+      "configurations": ["Backend Go", "Test with Swagger - Go (8082)"],
+      "stopAll": true,
+      "presentation": { "group": "swagger", "order": 2 }
+    },
+    {
+      "name": "Test Python with Swagger",
+      "configurations": ["Backend Python", "Test with Swagger - Python (8083)"],
+      "stopAll": true,
+      "presentation": { "group": "swagger", "order": 3 }
+    },
+    {
+      "name": "Test Node with Swagger",
+      "configurations": ["Backend Node", "Test with Swagger - Node (8084)"],
+      "stopAll": true,
+      "presentation": { "group": "swagger", "order": 4 }
+    },
+    {
+      "name": "Test BFF with Swagger",
+      "configurations": ["BFF", "Test with Swagger - BFF (3000)"],
+      "stopAll": true,
+      "presentation": { "group": "swagger", "order": 5 }
     }
   ]
 }
